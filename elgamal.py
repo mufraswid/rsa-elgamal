@@ -76,7 +76,7 @@ class Elgamal():
 
     # ENC AND DEC
     def encrypt(self):
-        num_rep = str(int.from_bytes(bytes(self.msg, 'UTF-8'), byteorder='big'))
+        num_rep = str(int.from_bytes(self.msg, byteorder='big'))
         print(num_rep)
         i = 0
         j = 1
@@ -84,8 +84,11 @@ class Elgamal():
         while j <= len(num_rep) + 1:
             lead_zero = 0
             num_cur = int(num_rep[i:j])
-            if num_rep[i:j][0] == '0':
-                lead_zero = 1
+            for cr in num_rep[i:j]:
+                if cr != '0':
+                    break
+                else:
+                    lead_zero += 1
             if num_cur > self.prime - 1 or j > len(num_rep):
                 if j <= len(num_rep):
                     j -= 1
@@ -106,14 +109,11 @@ class Elgamal():
             a_inv = pow(a, self.prime - 1 - self.x, self.prime)
             print(a_inv, a, b)
             msg = (b * a_inv) % self.prime
-            if lz == 0:
-                self.dec_array += str(msg)
-            else:
-                self.dec_array += '0' + str(msg)
+            msg = str(msg)
+            for i in range(lz):
+                msg = '0' + msg
+            self.dec_array += str(msg)
         print(self.dec_array)
-        print(
-            str(int(self.dec_array).to_bytes(math.ceil(math.log(int(self.dec_array), 256)), byteorder='big'), 'UTF-8')
-        )
         
     # def enc_from_file(self, filepath : str):
 
@@ -164,7 +164,7 @@ if __name__ == '__main__':
     print("Hello, World!")
     a = Elgamal(1103)
     a.generate_key()
-    a.get_input("Hello, World!")
+    a.get_input(b'Hello, World!\nMy name is ojan')
     a.encrypt()
     a.enc_write_file('hue.txt')
     a.dec_from_file('hue.txt')
