@@ -118,40 +118,55 @@ class Elgamal():
     # def enc_from_file(self, filepath : str):
 
     def enc_write_file(self, filepath : str):
-        enc_file = open(filepath, 'w')
+        enc_file = open(filepath, 'wb')
+        enc_msg = ''
         for i in range(len(self.enc_array)):
-            enc_file.write(str(self.enc_array[i][0]))
-            enc_file.write('\x00')
-            enc_file.write(str(self.enc_array[i][1]))
-            enc_file.write('\x00')
-            enc_file.write(str(self.enc_array[i][2]))
+            enc_msg += str(self.enc_array[i][0])
+            enc_msg += 'ab'
+            enc_msg += str(self.enc_array[i][1])
+            enc_msg += 'ab'
+            enc_msg += str(self.enc_array[i][2])
             if i < len(self.enc_array) - 1:
-                enc_file.write('\x00a\x00')
+                enc_msg += 'ff'
+        if len(enc_msg) % 2 == 1:
+            enc_msg = '0' + enc_msg
+        enc_file.write(
+            bytes.fromhex(enc_msg.strip())
+        )
         enc_file.close()
 
     def dec_from_file(self, filepath : str):
         self.enc_array = []
-        enc_file = open(filepath, 'r')
-        arr = enc_file.read().split('\x00a\x00')
+        enc_file = open(filepath, 'rb')
+        num = enc_file.read().hex()
+        print(num)
+        arr = num.split('ff')
         for cont in arr:
-            cont_arr = cont.split('\x00')
+            cont_arr = cont.split('ab')
             a = int(cont_arr[0])
             b = int(cont_arr[1])
             lz = int(cont_arr[2])
             self.enc_array.append((a, b, lz))
         print(self.enc_array)
 
-    # def dec_write_file(self, filepath : str):
+    def dec_write_file(self, filepath : str):
+        dec_file = open(filepath, 'wb')
+        dec_file.write(
+            int(self.dec_array).to_bytes(math.ceil(math.log(int(self.dec_array), 256)), byteorder='big')
+        )
+        dec_file.close()
+
     
     def get_input(self, msg : str):
         self.msg = msg
 
 if __name__ == '__main__':
     print("Hello, World!")
-    a = Elgamal(17)
+    a = Elgamal(1103)
     a.generate_key()
     a.get_input("Hello, World!")
     a.encrypt()
     a.enc_write_file('hue.txt')
     a.dec_from_file('hue.txt')
     a.decrypt()
+    a.dec_write_file('dec.txt')
