@@ -17,8 +17,8 @@
    <widget class="QStackedWidget" name="stackedWidget">
     <property name="geometry">
      <rect>
-      <x>-30</x>
-      <y>-10</y>
+      <x>-10</x>
+      <y>0</y>
       <width>1071</width>
       <height>601</height>
      </rect>
@@ -27,21 +27,21 @@
      <widget class="QLabel" name="title">
       <property name="geometry">
        <rect>
-        <x>340</x>
-        <y>120</y>
-        <width>111</width>
+        <x>450</x>
+        <y>200</y>
+        <width>161</width>
         <height>20</height>
        </rect>
       </property>
       <property name="text">
-       <string>TUGAS KRIPTO</string>
+       <string>TUGAS KECIL 3 KRIPTO</string>
       </property>
      </widget>
      <widget class="QPushButton" name="rsabutton">
       <property name="geometry">
        <rect>
-        <x>340</x>
-        <y>170</y>
+        <x>480</x>
+        <y>250</y>
         <width>97</width>
         <height>33</height>
        </rect>
@@ -53,8 +53,8 @@
      <widget class="QPushButton" name="egbutton">
       <property name="geometry">
        <rect>
-        <x>340</x>
-        <y>220</y>
+        <x>480</x>
+        <y>300</y>
         <width>97</width>
         <height>33</height>
        </rect>
@@ -96,16 +96,6 @@
       </property>
       <property name="text">
        <string>RSA</string>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="RSA_key_y_value">
-      <property name="geometry">
-       <rect>
-        <x>70</x>
-        <y>220</y>
-        <width>113</width>
-        <height>31</height>
-       </rect>
       </property>
      </widget>
      <widget class="QPushButton" name="RSA_returnbutton">
@@ -189,7 +179,7 @@
        <string>x</string>
       </property>
      </widget>
-     <widget class="QLabel" name="RSA_key_g_label">
+     <widget class="QLabel" name="RSA_key_n_label">
       <property name="geometry">
        <rect>
         <x>50</x>
@@ -199,7 +189,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>g</string>
+       <string>n</string>
       </property>
      </widget>
      <widget class="QLabel" name="RSA_sess_n_label">
@@ -238,19 +228,6 @@
        <string>Pilih dari file</string>
       </property>
      </widget>
-     <widget class="QLabel" name="RSA_key_y_label">
-      <property name="geometry">
-       <rect>
-        <x>50</x>
-        <y>220</y>
-        <width>16</width>
-        <height>17</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>y</string>
-      </property>
-     </widget>
      <widget class="QLabel" name="RSA_key_label">
       <property name="geometry">
        <rect>
@@ -264,7 +241,7 @@
        <string>Kunci Kripto Anda</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="RSA_key_g_value">
+     <widget class="QLineEdit" name="RSA_key_n_value">
       <property name="geometry">
        <rect>
         <x>70</x>
@@ -274,7 +251,7 @@
        </rect>
       </property>
      </widget>
-     <widget class="QLineEdit" name="RSA_key_p_value">
+     <widget class="QLineEdit" name="RSA_key_e_value">
       <property name="geometry">
        <rect>
         <x>70</x>
@@ -333,7 +310,7 @@
        <string>Pilih kunci dari file</string>
       </property>
      </widget>
-     <widget class="QLabel" name="RSA_key_x_label">
+     <widget class="QLabel" name="RSA_key_d_label">
       <property name="geometry">
        <rect>
         <x>50</x>
@@ -343,7 +320,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>x</string>
+       <string>d</string>
       </property>
      </widget>
      <widget class="QLineEdit" name="RSA_sess_x_value">
@@ -382,7 +359,7 @@
        <string>Hasil</string>
       </property>
      </widget>
-     <widget class="QLabel" name="RSA_key_p_label">
+     <widget class="QLabel" name="RSA_key_e_label">
       <property name="geometry">
        <rect>
         <x>50</x>
@@ -392,7 +369,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>p</string>
+       <string>e</string>
       </property>
      </widget>
      <widget class="QLineEdit" name="RSA_sess_g_value">
@@ -431,7 +408,7 @@
        <string>Bangkitkan Kunci</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="RSA_key_x_value">
+     <widget class="QLineEdit" name="RSA_key_d_value">
       <property name="geometry">
        <rect>
         <x>70</x>
@@ -539,6 +516,16 @@
       </property>
       <property name="text">
        <string>Pilih format</string>
+      </property>
+     </widget>
+     <widget class="QTextEdit" name="RSA_sess_result">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>300</y>
+        <width>151</width>
+        <height>87</height>
+       </rect>
       </property>
      </widget>
     </widget>
@@ -993,7 +980,7 @@
        <string>Pilih format</string>
       </property>
      </widget>
-     <widget class="QTextEdit" name="textEdit">
+     <widget class="QTextEdit" name="EG_sess_result">
       <property name="geometry">
        <rect>
         <x>210</x>
