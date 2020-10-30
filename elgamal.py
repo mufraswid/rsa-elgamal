@@ -36,7 +36,7 @@ class Elgamal():
 
         # Write file .pub
         pbfile = open(pubfilepath, 'w')
-        pbfile.write(pubfile_payload)
+        pbfile.write(pubfile_payload )
         pbfile.close()
 
         # Write file .priv
@@ -52,7 +52,7 @@ class Elgamal():
         
         args = pubfile_payload.split(';')
         
-        if args[0] != 'ELGAMAL':
+        if args[0] != 'ELGAMAL' or len(args) != 4:
             print('ERROR: Invalid public key file')
             return
         
@@ -67,7 +67,7 @@ class Elgamal():
         
         args = privfile_payload.split(';')
         
-        if args[0] != 'ELGAMAL':
+        if args[0] != 'ELGAMAL' or len(args) != 3:
             print('ERROR: Invalid public key file')
             return
         
@@ -77,7 +77,6 @@ class Elgamal():
     # ENC AND DEC
     def encrypt(self):
         num_rep = str(int.from_bytes(self.msg, byteorder='big'))
-        print(num_rep)
         i = 0
         j = 1
         k = 8
@@ -93,7 +92,6 @@ class Elgamal():
                 if j <= len(num_rep):
                     j -= 1
                     num_cur = num_cur // 10
-                print(num_cur)
                 a = pow(self.g, k, self.prime)
                 b = (pow(self.y, k) * (num_cur)) % self.prime
                 self.enc_array.append((a, b, lead_zero))
@@ -101,13 +99,11 @@ class Elgamal():
                 j = i + 1
             else:
                 j += 1
-        print(self.enc_array)
 
     def decrypt(self):
         self.dec_array = ''
         for a, b, lz in self.enc_array:
             a_inv = pow(a, self.prime - 1 - self.x, self.prime)
-            print(a_inv, a, b)
             msg = (b * a_inv) % self.prime
             msg = str(msg)
             for i in range(lz):
@@ -139,7 +135,6 @@ class Elgamal():
         self.enc_array = []
         enc_file = open(filepath, 'rb')
         num = enc_file.read().hex()
-        print(num)
         arr = num.split('ff')
         for cont in arr:
             cont_arr = cont.split('ab')
@@ -147,7 +142,6 @@ class Elgamal():
             b = int(cont_arr[1])
             lz = int(cont_arr[2])
             self.enc_array.append((a, b, lz))
-        print(self.enc_array)
 
     def dec_write_file(self, filepath : str):
         dec_file = open(filepath, 'wb')
@@ -156,15 +150,44 @@ class Elgamal():
         )
         dec_file.close()
 
-    
-    def get_input(self, msg : str):
+    # Getter
+    def get_input(self, msg : bytes):
         self.msg = msg
+    
+    def parse_msg_to_enc(self):
+        num = self.msg.hex()
+        arr = num.split('ff')
+        for cont in arr:
+            cont_arr = cont.split('ab')
+            a = int(cont_arr[0])
+            b = int(cont_arr[1])
+            lz = int(cont_arr[2])
+            self.enc_array.append((a, b, lz))
+    
+    def get_cipher_text(self):
+        enc_msg = ''
+        for i in range(len(self.enc_array)):
+            enc_msg += str(self.enc_array[i][0])
+            enc_msg += 'ab'
+            enc_msg += str(self.enc_array[i][1])
+            enc_msg += 'ab'
+            enc_msg += str(self.enc_array[i][2])
+            if i < len(self.enc_array) - 1:
+                enc_msg += 'ff'
+        if len(enc_msg) % 2 == 1:
+            enc_msg = '0' + enc_msg
+            return str(bytes.fromhex(enc_msg.strip()), 'UTF-8', errors='ignore')
+    
+    def get_plain_text(self):
+        return str(int(self.dec_array).to_bytes(math.ceil(math.log(int(self.dec_array), 256)), byteorder='big'), 'UTF-8', errors='ignore')
+
+
 
 if __name__ == '__main__':
     print("Hello, World!")
     a = Elgamal(1103)
     a.generate_key()
-    a.get_input(b'Hello, World!\nMy name is ojan')
+    a.get_input(b'Hehehe')
     a.encrypt()
     a.enc_write_file('hue.txt')
     a.dec_from_file('hue.txt')
