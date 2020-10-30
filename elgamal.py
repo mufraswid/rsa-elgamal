@@ -76,10 +76,11 @@ class Elgamal():
 
     # ENC AND DEC
     def encrypt(self):
+        self.enc_array = []
         num_rep = str(int.from_bytes(self.msg, byteorder='big'))
         i = 0
         j = 1
-        k = 8
+        k = random.randint(1, self.prime - 2)
         while j <= len(num_rep) + 1:
             lead_zero = 0
             num_cur = int(num_rep[i:j])
@@ -109,9 +110,11 @@ class Elgamal():
             for i in range(lz):
                 msg = '0' + msg
             self.dec_array += str(msg)
-        print(self.dec_array)
         
-    # def enc_from_file(self, filepath : str):
+    def enc_from_file(self, filepath : str):
+        filetarget = open(filepath, 'rb')
+        self.msg = filetarget.read()
+        filetarget.close()
 
     def enc_write_file(self, filepath : str):
         enc_file = open(filepath, 'wb')
@@ -150,6 +153,7 @@ class Elgamal():
         )
         dec_file.close()
 
+
     # Getter
     def get_input(self, msg : bytes):
         self.msg = msg
@@ -176,12 +180,21 @@ class Elgamal():
                 enc_msg += 'ff'
         if len(enc_msg) % 2 == 1:
             enc_msg = '0' + enc_msg
-            return str(bytes.fromhex(enc_msg.strip()), 'UTF-8', errors='ignore')
+        return str(bytes.fromhex(enc_msg.strip()), 'UTF-8', errors='ignore')
     
     def get_plain_text(self):
         return str(int(self.dec_array).to_bytes(math.ceil(math.log(int(self.dec_array), 256)), byteorder='big'), 'UTF-8', errors='ignore')
+    
 
+    # Setter
+    def set_public_key(self, p : int, g : int, y : int):
+        self.prime = p
+        self.g = g
+        self.y = y
 
+    def set_private_key(self, p : int, x : int):
+        self.prime = p
+        self.x = x
 
 if __name__ == '__main__':
     print("Hello, World!")
