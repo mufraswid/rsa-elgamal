@@ -60,13 +60,15 @@ class MainWindow(QMainWindow):
         self.egbutton.clicked.connect(lambda:self.stackedWidget.setCurrentIndex(2))
 
         # RSA buttons
-        # self.RSA_act_decbutton.setText(_translate("MainWindow", "Dekripsi"))
-        # self.RSA_key_savebutton.setText(_translate("MainWindow", "Simpan Kunci"))
-        # self.RSA_key_filebutton.setText(_translate("MainWindow", "Pilih kunci dari file"))
-        # self.RSA_act_execbutton.setText(_translate("MainWindow", "EXECUTE"))
-        # self.RSA_key_genbutton.setText(_translate("MainWindow", "Bangkitkan Kunci"))
-        # self.RSA_input_filebutton.setText(_translate("MainWindow", "Pilih dari file"))
-        # self.RSA_act_encbutton.setText(_translate("MainWindow", "Enkripsi"))
+        # self.RSA_key_savebutton.clicked.connect(self.rsa_save_key)
+        # self.RSA_act_execbutton.clicked.connect(self.rsa_execute)
+        # self.RSA_key_genbutton.clicked.connect(self.rsa_generate_key)
+        # self.RSA_key_filebutton.clicked.connect(self.rsa_import_key)
+        # self.RSA_act_decbutton.clicked.connect(self.set_mode_dec)
+        # self.RSA_act_encbutton.clicked.connect(self.set_mode_enc)
+        # self.RSA_input_filebutton.clicked.connect(self.rsa_get_input_file)
+        # self.RSA_fmt_txtbutton.clicked.connect(self.set_format_txt)
+        # self.RSA_fmt_filebutton.clicked.connect(self.set_format_file)
         self.RSA_returnbutton.clicked.connect(lambda:self.stackedWidget.setCurrentIndex(0))
 
         # Elgamal buttons
@@ -79,14 +81,17 @@ class MainWindow(QMainWindow):
         self.EG_input_filebutton.clicked.connect(self.elgamal_get_input_file)
         self.EG_fmt_txtbutton.clicked.connect(self.set_format_txt)
         self.EG_fmt_filebutton.clicked.connect(self.set_format_file)
-
         self.EG_returnbutton.clicked.connect(lambda:self.stackedWidget.setCurrentIndex(0))
 
     # DIFFIE HELMAN STUFF
 
 
     # RSA STUFF
-
+    # def rsa_save_key(self)
+    # def rsa_execute(self)
+    # def rsa_generate_key(self)
+    # def rsa_import_key(self)
+    # def rsa_get_input_file(self)
 
     # ELGAMAL STUFF
     def elgamal_save_key(self):
