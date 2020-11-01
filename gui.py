@@ -9,6 +9,7 @@
 
 import sys
 import os
+import time
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 from PyQt5.uic import loadUi
@@ -25,7 +26,7 @@ class MainWindow(QMainWindow):
         loadUi(os.getcwd() + '/gui.ui', self)
         self.constraint_input()
         self.connect_buttons()
-        self.elgamal = Elgamal(1103)
+        self.elgamal = Elgamal()
         # self.rsa = RSA()
         self.mode = None
         self.format = None
@@ -114,6 +115,7 @@ class MainWindow(QMainWindow):
     def elgamal_execute(self):
         self.elgamal_set_public_key()
         self.elgamal_set_private_key()
+        st = time.time()
         if self.mode == 'enc':
             if self.format == 'txt':
                 self.elgamal.get_input(
@@ -130,6 +132,8 @@ class MainWindow(QMainWindow):
                 self.elgamal.encrypt()
                 fileName, _ = QFileDialog.getSaveFileName(None, "Save Encrypted File", "", "All Files (*)")
                 self.elgamal.enc_write_file(fileName)
+                # Print file size
+                self.EG_size_value.setText(str(os.path.getsize(fileName) / 1000))
         else:
             if self.format == 'txt':
                 self.elgamal.get_input(
@@ -147,6 +151,12 @@ class MainWindow(QMainWindow):
                 self.elgamal.decrypt()
                 fileName, _ = QFileDialog.getSaveFileName(None, "Save Encrypted File", "", "All Files (*)")
                 self.elgamal.dec_write_file(fileName)
+                # Print file 
+                self.EG_size_value.setText(str(os.path.getsize(fileName) / 1000))
+
+        end = str(time.time() - st)
+        # Set time execution
+        self.EG_time_value.setText(end)
     
     def elgamal_get_input_file(self):
         fileName, _ = QFileDialog.getOpenFileName(None, "Get Input File", "", "All Files (*)")

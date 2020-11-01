@@ -1,10 +1,11 @@
 # Elgamal
+from Crypto.Util.number import getPrime
 import random
 import math
 
 class Elgamal():
-    def __init__(self, prime : int):
-        self.prime = prime
+    def __init__(self):
+        self.prime = None
         self.msg = None
         self.g = None
         self.x = None
@@ -15,6 +16,8 @@ class Elgamal():
 
     # KEY GENERATION
     def generate_key(self):
+        bit = random.randint(10, 20)
+        self.prime = getPrime(bit)
         self.g = random.randint(1, self.prime - 1)
         self.x = random.randint(1, self.prime - 2)
         self.y = pow(self.g, self.x, self.prime)
