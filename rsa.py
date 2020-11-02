@@ -1,10 +1,24 @@
-
 from Crypto.Util.number import getPrime
 from util import euler_totient, modular_inverse
 import math
 import random
 
 class RSA():
+  """
+  A class used as RSA (Rivest-Shamir-Adlemann) cipher
+
+  Parameters
+  ----------
+  p : int (first secret large prime)
+  q : int (second secret large prime)
+  n : int (product of p and q, shared publicly)
+  e : int (component of public key, a random large number relatively prime to euler(n))
+  d : int (modular inverse of e in modulo euler(n))
+
+  Methods
+  -------
+
+  """
   def __init__(self):
     self.n = None
     self.p = None
@@ -17,6 +31,9 @@ class RSA():
 
   # KEY GENERATION
   def generate_key(self):
+    '''
+    Generate key and paramters used in the RSA scheme
+    '''
     bit = random.randint(10, 20)
     self.p = getPrime(bit)
     self.q = getPrime(bit)
@@ -28,14 +45,6 @@ class RSA():
       if math.gcd(check, totient) == 1:
         self.e = check
     self.d = pow(self.e, -1, totient)
-
-  def get_public_key(self):
-    assert self.e is not None and self.n is not None
-    return self.e, self.n
-
-  def get_private_key(self):
-    assert self.d is not None and self.n is not None
-    return self.d, self.n
 
   def save_generated_keys(self, pubfilepath : str, privfilepath : str):
     '''
@@ -144,23 +153,44 @@ class RSA():
     print("read ciphertext in hex: ", num)
     arr = num.split('ff')
     for cont in arr:
-        cont_arr = cont.split('ab')
-        b = int(cont_arr[0])
-        lz = int(cont_arr[1])
-        self.enc_array.append((b, lz))
+      cont_arr = cont.split('ab')
+      b = int(cont_arr[0])
+      lz = int(cont_arr[1])
+      self.enc_array.append((b, lz))
 
   def dec_write_file(self, filepath : str):
     dec_file = open(filepath, 'wb')
     dec_file.write(
-        int(self.dec_array).to_bytes(math.ceil(math.log(int(self.dec_array), 256)), byteorder='big')
+      int(self.dec_array).to_bytes(math.ceil(math.log(int(self.dec_array), 256)), byteorder='big')
     )
     dec_file.close()
 
-  # Getter
+  def parse_msg_to_enc(self):
+    for ch in self.msg:
+      print("char in ciphertext: ", ch, chr(ch))
+    num = self.msg.hex()
+    print("msg in hex: ", num)
+    arr = num.split('ff')
+    for cont in arr:
+      cont_arr = cont.split('ab')
+      b = int(cont_arr[0])
+      lz = int(cont_arr[1])
+      self.enc_array.append((b, lz))
+
+  # GETTER
   def get_input(self, msg : bytes):
     self.msg = msg
 
+  def get_public_key(self):
+    assert self.e is not None and self.n is not None
+    return self.e, self.n
+
+  def get_private_key(self):
+    assert self.d is not None and self.n is not None
+    return self.d, self.n
+
   def get_cipher_text(self):
+    print("enc_array length: ", len(self.enc_array))
     enc_msg = ''
     for i in range(len(self.enc_array)):
       enc_msg += str(self.enc_array[i][0])
@@ -175,18 +205,7 @@ class RSA():
   def get_plain_text(self):
     return str(int(self.dec_array).to_bytes(math.ceil(math.log(int(self.dec_array), 256)), byteorder='big'), 'UTF-8', errors='ignore')
 
-  def parse_msg_to_enc(self):
-    for ch in self.msg:
-      print("char in ciphertext: ", ch, chr(ch))
-    num = self.msg.hex()
-    print("msg in hex: ", num)
-    arr = num.split('ff')
-    for cont in arr:
-      cont_arr = cont.split('ab')
-      b = int(cont_arr[0])
-      lz = int(cont_arr[1])
-      self.enc_array.append((b, lz))
-
+  # SETTER
   def set_public_key(self, e : int, n : int):
     self.e = e
     self.n = n
@@ -212,9 +231,4 @@ if __name__ == '__main__':
   cipher.dec_from_file('tes.txt')
   cipher.decrypt()
   cipher.dec_write_file('res.txt')
-
   # cipher.print_params()
-
-
-
-

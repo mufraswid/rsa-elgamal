@@ -557,6 +557,19 @@
        <string>Besar File (KB):</string>
       </property>
      </widget>
+     <widget class="QLabel" name="RSA_inp_file_label">
+      <property name="geometry">
+       <rect>
+        <x>880</x>
+        <y>260</y>
+        <width>151</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="ELGAMAL">
      <widget class="QPushButton" name="EG_key_savebutton">
@@ -1071,6 +1084,19 @@
        <string>Besar File (KB):</string>
       </property>
      </widget>
+     <widget class="QLabel" name="EG_inp_file_label">
+      <property name="geometry">
+       <rect>
+        <x>870</x>
+        <y>260</y>
+        <width>151</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>
@@ -1079,9 +1105,9 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup_4"/>
   <buttongroup name="buttonGroup_3"/>
-  <buttongroup name="buttonGroup_2"/>
   <buttongroup name="buttonGroup"/>
+  <buttongroup name="buttonGroup_4"/>
+  <buttongroup name="buttonGroup_2"/>
  </buttongroups>
 </ui>

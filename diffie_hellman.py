@@ -19,6 +19,15 @@ class DiffieHellman():
   get_session_key()
     retrieve the session key using the parameters n, g, x, y, that is g^xy (mod n)
 
+  generate_parameters()
+    generate the value of the parameters
+
+  set_parameters()
+    set the value of the parameters
+
+  get_parameters()
+    get the value of the parameters
+    
   """
   def __init__(self):
     self.n = None

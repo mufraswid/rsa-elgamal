@@ -142,10 +142,18 @@ class MainWindow(QMainWindow):
                 )
                 self.rsa.encrypt()
                 self.RSA_output_text.setText(self.rsa.get_cipher_text())
+                # print("RSA get cipher text: ", bytes(self.rsa.get_cipher_text(), 'UTF-8'))
             elif self.format == 'file':
+                if self.rsa_inpfile == None:
+                    self.display_value_error("File belum dipilih")
+                    return
+                assert self.rsa_inpfile is not None
                 self.rsa.enc_from_file(self.rsa_inpfile)
                 self.rsa.encrypt()
                 fileName, _ = QFileDialog.getSaveFileName(None, "Save Encrypted File", "", "All Files (*)")
+                print("tes({})".format(fileName))
+                if fileName == "":
+                    return
                 self.rsa.enc_write_file(fileName)
                 # Print file size
                 self.RSA_size_value.setText(str(os.path.getsize(fileName) / 1000))
@@ -163,16 +171,24 @@ class MainWindow(QMainWindow):
                 self.rsa.get_input(
                     bytes(
                         self.RSA_input_text.toPlainText(),
-                        'latin_1'
+                        'UTF-8',
+                        errors='ignore'
                     )
                 )
                 self.rsa.parse_msg_to_enc()
                 self.rsa.decrypt()
                 self.RSA_output_text.setText(self.rsa.get_plain_text())
             elif self.format == 'file':
+                if self.rsa_inpfile == None:
+                    self.display_value_error("File belum dipilih")
+                    return
+                assert self.rsa_inpfile is not None
                 self.rsa.dec_from_file(self.rsa_inpfile)
                 self.rsa.decrypt()
                 fileName, _ = QFileDialog.getSaveFileName(None, "Save Encrypted File", "", "All Files (*)")
+                print("tes({})".format(fileName))
+                if fileName == "":
+                    return
                 self.rsa.dec_write_file(fileName)
                 # Print file size
                 self.RSA_size_value.setText(str(os.path.getsize(fileName) / 1000))
@@ -212,9 +228,8 @@ class MainWindow(QMainWindow):
     def rsa_get_input_file(self):
         fileName, _ = QFileDialog.getOpenFileName(None, "Get Input File", "", "All Files (*)")
         self.rsa_inpfile = fileName
-
-    # def rsa_save_cipher_text(self):
-    #     assert self.RSA
+        fileName = fileName.split('/')[-1]
+        self.RSA_inp_file_label.setText("Chosen file: {}".format(fileName))
 
     # ELGAMAL STUFF
     def elgamal_save_key(self):
@@ -294,6 +309,8 @@ class MainWindow(QMainWindow):
     def elgamal_get_input_file(self):
         fileName, _ = QFileDialog.getOpenFileName(None, "Get Input File", "", "All Files (*)")
         self.elgamal_inpfile = fileName
+        fileName = fileName.split('/')[-1]
+        self.EG_inp_file_label.setText("Chosen file: {}".format(fileName))
 
     def elgamal_import_key(self):
         fileNamePub, _ = QFileDialog.getOpenFileName(None, "Import Elgamal Public Key", "", "Public Key File (*.pub)")
