@@ -34,7 +34,7 @@ class RSA():
     '''
     Generate key and paramters used in the RSA scheme
     '''
-    bit = random.randint(10, 20)
+    bit = random.randint(100, 200)
     self.p = getPrime(bit)
     self.q = getPrime(bit)
     self.n = self.p * self.q
