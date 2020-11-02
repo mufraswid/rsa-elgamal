@@ -19,22 +19,32 @@ pip3 install pycryptodome
 ```
 
 ## Running the Program
+Simply do:
 ```
 python3 gui.py
 ```
 
 ## Screenshots
 
-Main Menu
+- Main Menu
 ![Menu](/img/main.jpg)
 
-RSA
+- RSA
 ![RSA](/img/rsa.jpg)
 
-Elgamal
+- Elgamal
 ![Elgamal](/img/elgamal.jpg)
 
 Diffie-Hellman session-key generation is available at both RSA and Elgamal (Kunci Sesi)
+
+- Additional Features:
+* Import private and public key (\*.pri, \*.pub)
+* Encrypt external file
+* Display ciphertext external file size and cipher running time
+
+## Issues
+
+Currently, directly copying and pasting the ciphertext when trying to decrypt might not work well due to encoding issues.
 
 ## Contributors
 - M. Fauzan Rafi Sidiq W.
