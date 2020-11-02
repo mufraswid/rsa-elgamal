@@ -26,7 +26,7 @@ python3 gui.py
 ## Screenshots
 
 Main Menu
-![Menu](/img/menu.jpg)
+![Menu](/img/main.jpg)
 
 RSA
 ![RSA](/img/rsa.jpg)

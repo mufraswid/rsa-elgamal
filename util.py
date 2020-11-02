@@ -1,5 +1,3 @@
-
-
 def modular_expo(base, power, mod):
   """
   Returns the value of base raised to the power of power reduced modulo mod
@@ -60,15 +58,3 @@ def modular_inverse(a : int, mod : int):
     raise Exception('modular inverse does not exist')
   else:
     return x % mod
-
-if __name__ == '__main__':
-  # a = 2
-  # b = 10
-  # print('2^10 mod 1001 is {}'.format(modular_expo(2, 10, 1001)))
-
-  # for i in range(1, 11):
-  #   print('euler({}) is {}'.format(i, euler_totient(i)))
-
-  a = 3
-  b = 7
-  print(modular_inverse(3, 7))
